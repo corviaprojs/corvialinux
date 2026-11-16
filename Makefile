@@ -36,11 +36,12 @@ isoclean:
 
 # Setup --- begin
 install_pkgs:
-	@chroot $(workdir)/rootfs apt install $(chroot_pkgs) -y
+	@chroot $(workdir)/rootfs apt install $(chroot_pkgs) -y 2>/dev/null
 setup_rootfs: 
-	@debootstrap --arch amd64 stable $(workdir)/rootfs http://deb.debian.org/debian/
+	@debootstrap --arch amd64 stable $(workdir)/rootfs http://deb.debian.org/debian/ 2>/dev/null
 
 setup: setup_rootfs install_pkgs
+	@mkdir $(workdir)/iso_root/live/
 	@echo "done: setup"
 # Setup --- end
 
@@ -48,11 +49,11 @@ importsCopy:
 	@cp $(workdir)/imports/etc/* $(workdir)/rootfs/etc/
 
 genInitramfs:
-	@chroot $(workdir)/rootfs update-initramfs -u
+	@chroot $(workdir)/rootfs update-initramfs -u 2>/dev/null
 
 genSquashfs: importsCopy
 	@rm -f $(workdir)/iso_root/live/filesystem.squashfs || true
-	@mksquashfs $(workdir)/rootfs $(workdir)/iso_root/live/filesystem.squashfs  -comp xz 
+	@mksquashfs $(workdir)/rootfs $(workdir)/iso_root/live/filesystem.squashfs -comp xz
 
 copyBoots:
 	@cp $(workdir)/rootfs/vmlinuz $(workdir)/iso_root/boot
