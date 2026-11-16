@@ -44,7 +44,7 @@ genInitramfs:
 setup_rootfs: insdeps
 	@debootstrap --arch amd64 stable $(workdir)/rootfs http://deb.debian.org/debian/
 
-setup: setup_rootfs install_pkgs geninitramfs
+setup: setup_rootfs install_pkgs
 	@echo "done: setup"
 # Setup --- end
 
