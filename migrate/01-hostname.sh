@@ -1,1 +1,1 @@
-echo "corvia" > ./rootfs/etc/hostname
+echo "simplelinux" > ./rootfs/etc/hostname

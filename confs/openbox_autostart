@@ -1,10 +1,4 @@
 xsetroot -cursor_name left_ptr &
-
-xfce4-panel &
-nm-applet &
-xfce4-power-manager &
-pnmixer &
-lxpolkit &
 xscreensaver --no-splash &
 
 (sleep 1s && nitrogen --restore) &

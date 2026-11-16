@@ -1,24 +1,28 @@
 .PHONY: help rf masclean migrate
 
 workdir       := $(shell pwd)
-chroot_pkgs   := live-boot linux-image-6.12.107+deb13-amd64 \
-	xfce4-panel \ 
-	lightdm openbox \
+chroot_pkgs := live-boot \
+	linux-image-6.12.107+deb13-amd64 \
+	lightdm \
+	openbox \
 	locales \
-	xfce4-whiskermenu-plugin xfce4-power-manager \
-	pnmixer pavucontrol \
-	lxpolkit \
-	network-manager network-manager-applet
+	network-manager \
+	xscreensaver \
+	nitrogen \
+	xorg \
+	obconf
 
 GRUB_MKRESCUE := $(shell command -v grub2-mkrescue 2>/dev/null || echo grub-mkrescue)	
 
 migrate_files := $(wildcard $(workdir)/migrate/*)
 
+iso_name := simpleLinux.iso
+
 all:
 	@echo "Use 'make help' to get started!"
 
 help:
-	@echo "Corvia Linux building guide/help:"
+	@echo "Simple Linux building guide/help:"
 	@echo "WARNING: For most of the commands needs SUDO/ROOT"
 	@echo " "
 	@echo "(sudo) make [command]"
@@ -41,11 +45,11 @@ masclean:
 isoclean:
 	@rm -f $(workdir)/iso_root/boot/{vmlinuz,initrd.img}
 	@rm -f $(workdir)/iso_root/live/*
-	@rm -f $(workdir)/CorviaLinux.iso
+	@rm -f $(workdir)/$(iso_name)
 
 # Setup --- begin
 install_pkgs:
-	@chroot $(workdir)/rootfs apt install $(chroot_pkgs) -y 2>/dev/null
+	@chroot $(workdir)/rootfs apt install --no-install-recommends $(chroot_pkgs) -y 2>/dev/null
 setup_rootfs: 
 	@debootstrap --arch amd64 stable $(workdir)/rootfs http://deb.debian.org/debian/ 2>/dev/null
 
@@ -74,4 +78,4 @@ copyBoots:
 	@cp $(workdir)/rootfs/initrd.img $(workdir)/iso_root/boot
 
 iso: genInitramfs genSquashfs copyBoots
-	$(GRUB_MKRESCUE) $(workdir)/iso_root -o $(workdir)/CorviaLinux.iso
+	$(GRUB_MKRESCUE) $(workdir)/iso_root -o $(workdir)/$(iso_name)
