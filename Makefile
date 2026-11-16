@@ -1,8 +1,8 @@
 .PHONY: help rf masclean
 
 workdir       := $(shell pwd)
-chroot_pkgs   := live-boot linux-image-6.12.107+deb13-amd64 xfce4-panel lightdm openbox
-GRUB_MKRESCUE := $(shell command -v grub2-mkrescue 2>/dev/null || echo grub-mkrescue)
+chroot_pkgs   := live-boot linux-image-6.12.107+deb13-amd64 xfce4-panel lightdm openbox locales
+GRUB_MKRESCUE := $(shell command -v grub2-mkrescue 2>/dev/null || echo grub-mkrescue)	
 
 migrate_files := $(wildcard $(workdir)/migrate/*)
 
@@ -34,7 +34,6 @@ isoclean:
 	@rm -f $(workdir)/iso_root/boot/{vmlinuz,initrd.img}
 	@rm -f $(workdir)/iso_root/live/*
 	@rm -f $(workdir)/CorviaLinux.iso
-
 
 # Setup --- begin
 install_pkgs:
