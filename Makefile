@@ -12,7 +12,7 @@ help:
 	@echo "WARNING: For most of the commands needs SUDO/ROOT"
 	@echo " "
 	@echo "(sudo) make [command]"
-	@echo "      setup   | debootstraping the debian and setuping up the packages | TRIGGERS: insdeps"
+	@echo "      setup   | debootstraping the debian and setuping up the packages"
 	@echo "      insdeps | running the ./install_deps.sh"
 	@echo "      rf      | chroot into the rootfs"
 	@echo "      isoclean| clear iso files: boot, live folder"
@@ -44,12 +44,13 @@ setup: setup_rootfs install_pkgs
 	@echo "done: setup"
 # Setup --- end
 
+importsCopy:
+	@cp $(workdir)/imports/etc/* $(workdir)/rootfs/etc/
 
 genInitramfs:
 	@chroot $(workdir)/rootfs update-initramfs -u
 
-genSquashfs:
-	@mkdir $(workdir)/iso_root/live/ || true
+genSquashfs: importsCopy
 	@rm -f $(workdir)/iso_root/live/filesystem.squashfs || true
 	@mksquashfs $(workdir)/rootfs $(workdir)/iso_root/live/filesystem.squashfs  -comp xz 
 
