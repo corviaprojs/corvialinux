@@ -47,13 +47,13 @@ setup: setup_rootfs install_pkgs
 	@echo "done: setup"
 # Setup --- end
 
-migrate1:
+migrate:
 	@for file in $(migrate_files); do \
 		echo "Migrate: $$file..."; \
 		chmod +x $$file; \
 		$$file; \
 	done
-
+# iso building:
 
 genInitramfs:
 	@chroot $(workdir)/rootfs update-initramfs -u 2>/dev/null
