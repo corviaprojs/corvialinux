@@ -1,7 +1,15 @@
-.PHONY: help rf masclean
+.PHONY: help rf masclean migrate
 
 workdir       := $(shell pwd)
-chroot_pkgs   := live-boot linux-image-6.12.107+deb13-amd64 xfce4-panel lightdm openbox locales
+chroot_pkgs   := live-boot linux-image-6.12.107+deb13-amd64 \
+	xfce4-panel \ 
+	lightdm openbox \
+	locales \
+	xfce4-whiskermenu-plugin xfce4-power-manager \
+	pnmixer pavucontrol \
+	lxpolkit \
+	network-manager network-manager-applet
+
 GRUB_MKRESCUE := $(shell command -v grub2-mkrescue 2>/dev/null || echo grub-mkrescue)	
 
 migrate_files := $(wildcard $(workdir)/migrate/*)
@@ -48,7 +56,7 @@ setup: setup_rootfs install_pkgs
 
 migrate:
 	@for file in $(migrate_files); do \
-		echo "Migrate: $$file..."; \
+		echo "Applying: $$file..."; \
 		chmod +x $$file; \
 		$$file; \
 	done
