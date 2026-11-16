@@ -1,8 +1,6 @@
 
 # SimpleLinux
 
----
-
 A SDK that shows how a simple custom linux operating system get built!
 SimpleLinux using Debian 13 as a base.
 Its uses Lightdm and Openbox.
@@ -23,9 +21,13 @@ Its uses Lightdm and Openbox.
   
 
 **What is a lightdm?**
+
 *A fast, simple Display Manager*
+
 **TODO: finish**
 
 **What is a autostart file?**
+
 *The file thats gets executed when you log in or start openbox*
+
 **TODO: finish *2x heh***
