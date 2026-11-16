@@ -38,9 +38,6 @@ cleaniso:
 # Setup --- begin
 install_pkgs:
 	@chroot $(workdir)/rootfs apt install $(chroot_pkgs) -y
-
-genInitramfs:
-	@chroot $(workdir)/rootfs update-initramfs -u
 setup_rootfs: insdeps
 	@debootstrap --arch amd64 stable $(workdir)/rootfs http://deb.debian.org/debian/
 
@@ -48,6 +45,9 @@ setup: setup_rootfs install_pkgs
 	@echo "done: setup"
 # Setup --- end
 
+
+genInitramfs:
+	@chroot $(workdir)/rootfs update-initramfs -u
 
 genSquashfs:
 	@mkdir $(workdir)/iso_root/live/
