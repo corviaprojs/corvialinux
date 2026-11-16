@@ -1,4 +1,4 @@
-if [ "$EUID" -ne 0 ]; then
+if [[ "$EUID" -ne 0 ]]; then
     echo "For installing you need to run it with root"
     exit 1;
 fi;
