@@ -50,6 +50,7 @@ setup: setup_rootfs install_pkgs geninitramfs
 
 
 genSquashfs:
+	@mkdir $(workdir)/iso_root/live/
 	@rm -f $(workdir)/iso_root/live/filesystem.squashfs || true
 	@mksquashfs $(workdir)/rootfs $(workdir)/iso_root/live/filesystem.squashfs  -comp xz 
 
