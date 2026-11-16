@@ -1,0 +1,1 @@
+echo "corvia" > ./rootfs/etc/hostname

@@ -1,8 +1,10 @@
 .PHONY: help rf masclean
 
 workdir       := $(shell pwd)
-chroot_pkgs   := live-boot linux-image-6.12.107+deb13-amd64
+chroot_pkgs   := live-boot linux-image-6.12.107+deb13-amd64 xfce4-panel lightdm openbox
 GRUB_MKRESCUE := $(shell command -v grub2-mkrescue 2>/dev/null || echo grub-mkrescue)
+
+migrate_files := $(wildcard $(workdir)/migrate/*)
 
 all:
 	@echo "Use 'make help' to get started!"
@@ -45,13 +47,18 @@ setup: setup_rootfs install_pkgs
 	@echo "done: setup"
 # Setup --- end
 
-importsCopy:
-	@cp $(workdir)/imports/etc/* $(workdir)/rootfs/etc/
+migrate1:
+	@for file in $(migrate_files); do \
+		echo "Migrate: $$file..."; \
+		chmod +x $$file; \
+		$$file; \
+	done
+
 
 genInitramfs:
 	@chroot $(workdir)/rootfs update-initramfs -u 2>/dev/null
 
-genSquashfs: importsCopy
+genSquashfs: migrate
 	@rm -f $(workdir)/iso_root/live/filesystem.squashfs || true
 	@mksquashfs $(workdir)/rootfs $(workdir)/iso_root/live/filesystem.squashfs -comp xz
 

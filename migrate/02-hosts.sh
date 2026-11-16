@@ -1,0 +1,6 @@
+cat << EOF > ./rootfs/etc/hosts
+127.0.0.1       localhost corvia
+::1             localhost ip6-localhost ip6-loopback corvia
+ff02::1         ip6-allnodes
+ff02::2         ip6-allrouters
+EOF
