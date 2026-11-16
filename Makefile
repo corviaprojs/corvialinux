@@ -1,8 +1,7 @@
 .PHONY: help rf masclean
 
-workdir     := $(shell pwd)
-chroot_pkgs := live-boot linux-image-6.12.107+deb13-amd64
-
+workdir       := $(shell pwd)
+chroot_pkgs   := live-boot linux-image-6.12.107+deb13-amd64
 GRUB_MKRESCUE := $(shell command -v grub2-mkrescue 2>/dev/null || echo grub-mkrescue)
 
 all:
@@ -19,8 +18,6 @@ help:
 	@echo "      isoclean| clear iso files: boot, live folder"
 	@echo "      masclean| COMPLETLY ERASES THE ROOTFS | DANGER ZONE"
 
-
-##              Default fully used by SETUP
 insdeps:
 	@./install_deps.sh || true
 
