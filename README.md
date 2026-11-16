@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> 81b5d013f27973c5d2855cf39a5ab0a0e7aeefd2
 # SimpleLinux
 
 A SDK that shows how a simple custom linux operating system get built!
@@ -12,9 +16,18 @@ Its uses Lightdm and Openbox.
 - boot/grub/grub.cfg: **Grub2 bootloader file**
 - live: **Only for the live-boot package**
 
+<<<<<<< HEAD
 ### migrate: **Applys script on the rootfs and on the project**
 *the names shows what does*
 
+=======
+  
+
+### migrate: **Applys script on the rootfs and on the project**
+*the names shows what does*
+
+  
+>>>>>>> 81b5d013f27973c5d2855cf39a5ab0a0e7aeefd2
 
 **What is a lightdm?**
 
@@ -26,4 +39,8 @@ Its uses Lightdm and Openbox.
 
 *The file thats gets executed when you log in or start openbox*
 
+<<<<<<< HEAD
 **TODO: finish *2x heh***
+=======
+**TODO: finish *2x heh***
+>>>>>>> 81b5d013f27973c5d2855cf39a5ab0a0e7aeefd2
