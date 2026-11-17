@@ -2,9 +2,7 @@
 
 A fast, opensource linux.
 
-Purpose:
-    - Learning how a custom linux get built.
-    - It be simple customizable and configurable.
+Purpose: Learning how a custom linux get built. It be simple customizable and configurable.
 
 A migrate system thats gets executed for enableing, setuping up setting such as user configuration.
 
