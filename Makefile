@@ -1,14 +1,14 @@
-.PHONY: help rf masclean migrate
+.PHONY: chroot masclean isoclean install_pkgs setup_rootfs genInitramfs genSquashfs copyBoots
 
 workdir       := $(shell pwd)
+
+# packages thats gets installed on the rootfs
 chroot_pkgs := live-boot \
 	linux-image-6.12.107+deb13-amd64 \
 	lightdm \
 	openbox \
 	locales \
 	network-manager \
-	xscreensaver \
-	nitrogen \
 	xorg \
 	obconf
 
@@ -19,23 +19,9 @@ migrate_files := $(wildcard $(workdir)/migrate/*)
 iso_name := simpleLinux.iso
 
 all:
-	@echo "Use 'make help' to get started!"
+	@echo "Check the README.md! To get started!"
 
-help:
-	@echo "Simple Linux building guide/help:"
-	@echo "WARNING: For most of the commands needs SUDO/ROOT"
-	@echo " "
-	@echo "(sudo) make [command]"
-	@echo "      setup   | debootstraping the debian and setuping up the packages"
-	@echo "      insdeps | running the ./install_deps.sh"
-	@echo "      rf      | chroot into the rootfs"
-	@echo "      isoclean| clear iso files: boot, live folder"
-	@echo "      masclean| COMPLETLY ERASES THE ROOTFS | DANGER ZONE"
-
-insdeps:
-	@./install_deps.sh || true
-
-rf:
+chroot:
 	@chroot $(workdir)/rootfs /bin/bash
 	@umount $(workdir)/rootfs/proc || true
 
@@ -64,12 +50,13 @@ migrate:
 		chmod +x $$file; \
 		$$file; \
 	done
+
 # iso building:
 
 genInitramfs:
 	@chroot $(workdir)/rootfs update-initramfs -u 2>/dev/null
 
-genSquashfs: migrate
+genSquashfs:
 	@rm -f $(workdir)/iso_root/live/filesystem.squashfs || true
 	@mksquashfs $(workdir)/rootfs $(workdir)/iso_root/live/filesystem.squashfs -comp xz
 
@@ -78,4 +65,5 @@ copyBoots:
 	@cp $(workdir)/rootfs/initrd.img $(workdir)/iso_root/boot
 
 iso: genInitramfs genSquashfs copyBoots
-	$(GRUB_MKRESCUE) $(workdir)/iso_root -o $(workdir)/$(iso_name)
+	@$(GRUB_MKRESCUE) $(workdir)/iso_root -o $(workdir)/$(iso_name)
+	@echo "Your iso is done: $(workdir)/$(iso_name)"

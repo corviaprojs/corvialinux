@@ -1,34 +1,39 @@
-
 # SimpleLinux
 
-A SDK that shows how a simple custom linux operating system get built!
-SimpleLinux using Debian 13 as a base.
-Its uses Lightdm and Openbox.
+A fast, opensource linux.
+Purpose:
+    - Learning how a custom linux get built.
+    - It be simple customizable and configurable.
 
-## **Structure/folders**:
-### confs: **Configs that gets copyed/applyed to simplelinux**
-- lightdm.conf: **The lightdm config**
-- openbox_autostart: **The autostart file**
-### iso_root: **What gets inside the iso**
-- boot/grub/grub.cfg: **Grub2 bootloader file**
-- live: **Only for the live-boot package**
+A migrate system thats gets executed for enableing, setuping up setting such as user configuration.
+Building Dependecy installer script: a simple shell script that installs the required packages to build down simple linux.
 
-  
+### Getting Started
 
-### migrate: **Applys script on the rootfs and on the project**
-*the names shows what does*
+Help is avalible with: 'sudo make help' also.
+1. Setuping up:
+`sudo make setup`
+    - Its creates a standard debian stable version debootstrap.
+    - Installs live-boot and openbox etc...(its definied in Makefile)
 
-  
+2. Applying migrate scripts:
+`sudo make migrate`
+    - Runs down the shell scripts in the migrate folder based on the number its has: '01-hostname.sh' <- runs first.
 
-**What is a lightdm?**
+3. Building ISO:
+`sudo make iso`
+    - Manually forces initramfs regeneration
+    - Its squashfs's the rootfs(debian debootstrap)
+    - Packs it with grub(2)-mkrescue with the iso_root/boot/grub/grub.cfg config file
 
-*A fast, simple Display Manager*
+You have your builded iso in the root.
 
-**TODO: finish**
+### More commands:
+`sudo make chroot`
+    - Chroot's into the existing rootfs with /bin/bash
 
+`sudo make masclean`
+    - REMOVES THE ROOTFS (Use at your own risk!)
 
-**What is a autostart file?**
-
-*The file thats gets executed when you log in or start openbox*
-
-**TODO: finish *2x heh***
+`sudo make isoclean`
+    - Clears out the iso_root folder
