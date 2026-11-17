@@ -1,4 +1,4 @@
-.PHONY: chroot masclean isoclean install_pkgs setup_rootfs genInitramfs genSquashfs copyBoots
+.PHONY: migrate chroot masclean isoclean install_pkgs setup_rootfs genInitramfs genSquashfs copyBoots
 
 workdir       := $(shell pwd)
 
@@ -10,7 +10,10 @@ chroot_pkgs := live-boot \
 	locales \
 	network-manager \
 	xorg \
-	obconf
+	obconf \
+	sudo \
+	dhcpd \
+	htop
 
 GRUB_MKRESCUE := $(shell command -v grub2-mkrescue 2>/dev/null || echo grub-mkrescue)	
 
