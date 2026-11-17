@@ -1,11 +1,15 @@
 # SimpleLinux
 
 A fast, opensource linux.
+
 Purpose:
+    
     - Learning how a custom linux get built.
+    
     - It be simple customizable and configurable.
 
 A migrate system thats gets executed for enableing, setuping up setting such as user configuration.
+
 Building Dependecy installer script: a simple shell script that installs the required packages to build down simple linux.
 
 ### Getting Started
